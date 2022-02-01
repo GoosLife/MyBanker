@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-02-01T08:54:00.407Z" agent="5.0 (Windows)" etag="82NqXtdA9lRzTH9HgZHL" version="16.5.2" type="github">
+<mxfile host="app.diagrams.net" modified="2022-02-01T10:18:27.773Z" agent="5.0 (Windows)" etag="i9wCS0GlAGI3dvxekn3x" version="16.5.2" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="2605" dy="2109" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -83,7 +83,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="zxL5zWdCW-zHQKjPgyib-16" value="ILimitations" style="swimlane;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="zxL5zWdCW-zHQKjPgyib-16" value="ITransactionLimit" style="swimlane;startSize=23;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="-660" y="680" width="200" height="60" as="geometry" />
         </mxCell>
         <mxCell id="zxL5zWdCW-zHQKjPgyib-17" value="&lt;div&gt;TransactionLimit&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="zxL5zWdCW-zHQKjPgyib-16" vertex="1">
@@ -125,10 +125,13 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="zxL5zWdCW-zHQKjPgyib-38" value="IExpiryDate" style="swimlane;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="-100" y="800" width="200" height="70" as="geometry" />
+          <mxGeometry x="-100" y="800" width="200" height="90" as="geometry" />
         </mxCell>
         <mxCell id="zxL5zWdCW-zHQKjPgyib-37" value="&lt;div&gt;ExpiresAfter&lt;/div&gt;&lt;div&gt;-&amp;gt; CalculateExpirationDate()&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="zxL5zWdCW-zHQKjPgyib-38" vertex="1">
           <mxGeometry y="30" width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="AnMg0R0ovfiQeOs0e8Q3-99" value="ExpiryDate" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="zxL5zWdCW-zHQKjPgyib-38">
+          <mxGeometry y="70" width="70" height="20" as="geometry" />
         </mxCell>
         <mxCell id="zxL5zWdCW-zHQKjPgyib-39" value="Customer" style="swimlane;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="-40" y="-200" width="200" height="130" as="geometry" />
