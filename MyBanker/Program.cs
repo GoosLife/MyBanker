@@ -1,127 +1,162 @@
 ﻿using MyBanker;
 using System.ComponentModel;
 
-Customer c = new Customer("Lis Sørensen", 18, new Account(2500));
+Console.BackgroundColor = ConsoleColor.Blue;
+Console.ForegroundColor = ConsoleColor.White;
+Console.Clear();
 
-Console.WriteLine("\n--- DEBIT CARD TEST ---\n");
+int gameState = 0;
+Account acc = new Account(0);
+Customer c = new Customer("",0,acc);
 
-if (new DebitCard(c).CheckRequirements())
+List<Card> list = new List<Card>();
+
+// Create new customer
+while (gameState == 0)
 {
-    DebitCard dc = new DebitCard(c);
+    
+    // Get user input variables for new account + customer
+    Console.WriteLine("Navn: ");
+    string? name = Console.ReadLine();
+    Console.WriteLine("Alder: ");
 
-    foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(dc))
+    int age = 0;
+    try
     {
-        string name = descriptor.Name;
-        object value = descriptor.GetValue(dc);
-        Console.WriteLine("{0}={1}", name, value);
+        age = Convert.ToInt32(Console.ReadLine());
+    }
+    catch
+    {
+        age = 0;
     }
 
-    Console.WriteLine("Under limit: \n");
-    Console.WriteLine(dc.DomesticTransaction(2400));
-    Console.WriteLine("Over limit: \n");
-    Console.WriteLine(dc.DomesticTransaction(200));
+    Console.WriteLine("Balance: ");
+
+    int balance = 0;
+    try
+    {
+        balance = Convert.ToInt32(Console.ReadLine());
+    }
+    catch
+    {
+        balance = 0;
+    }
+
+    // Create new accoutn & customer
+    acc = new Account(balance);
+    c = new Customer(name, age, acc);
+
+    gameState = 1;
 }
 
-c.Account.Deposit(-100); // DEBUG
-
-Console.WriteLine("\n---MAESTRO TEST---\n");
-
-if (new Maestro(c).CheckRequirements() == true)
+// Issue new card
+while (gameState == 1)
 {
-    Maestro m = new Maestro(c);
+    Console.WriteLine("Choose card type to issue:");
 
-    foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(m))
+    string menu = "1. Debit card\n" +
+        "2. Maestro card\n" +
+        "3. Visa Electron\n" +
+        "4. VISA/Dankort\n" +
+        "5. Mastercard";
+
+    Console.WriteLine(menu);
+
+    int menuChoice = 0;
+
+    menuChoice = int.Parse(Console.ReadKey().KeyChar.ToString());
+
+    switch(menuChoice)
+    {
+        case 1:
+            Console.Clear();
+            if (new DebitCard(c).CheckRequirements())
+            {
+                DebitCard dc = new DebitCard(c);
+                list.Add(dc);
+                gameState = 2;
+            }
+            else
+            {
+                gameState = 1;
+            }
+            break;
+
+        case 2:
+            Console.Clear();
+            if (new Maestro(c).CheckRequirements())
+            {
+                Maestro mc = new Maestro(c);
+                list.Add(mc);
+                gameState = 2;
+            }
+            else
+            {
+                gameState = 1;
+            }
+            break;
+
+        case 3:
+            Console.Clear();
+            if (new VisaElectron(c).CheckRequirements())
+            {
+                VisaElectron v = new VisaElectron(c);
+                list.Add(v);
+                gameState = 2;
+            }
+            else
+            {
+                gameState = 1;
+            }
+            break;
+
+        case 4:
+            Console.Clear();
+            if (new VisaDankort(c).CheckRequirements())
+            {
+                VisaDankort v = new VisaDankort(c);
+                list.Add(v);
+                gameState = 2;
+            }
+            else
+            {
+                gameState = 1;
+            }
+            break;
+
+        case 5:
+            Console.Clear();
+            if (new Mastercard(c).CheckRequirements())
+            {
+                Mastercard mc = new Mastercard(c);
+                list.Add(mc);
+                gameState = 2;
+            }
+            else
+            {
+                gameState = 1;
+            }
+            break;
+    }
+}
+
+// Print card details + actions TODO
+while (gameState == 2)
+{
+    // Print card details
+    foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(list[0]))
     {
         string name = descriptor.Name;
-        object value = descriptor.GetValue(m);
+        object value = descriptor.GetValue(list[0]);
         Console.WriteLine("{0} = {1}", name, value);
     }
 
-    c.Account.Deposit(10030);
+    Console.ReadKey();
 
-    Console.WriteLine("Under limit: \n");
-
-    Console.WriteLine(m.DomesticTransaction(5000));
-    Console.WriteLine(m.InternationalTransaction(30, "Euros"));
-    Console.WriteLine(m.OnlineTransaction(5000, "SEK"));
-
-    Console.WriteLine("Over limit: \n");
-
-    Console.WriteLine(m.DomesticTransaction(5000));
-    Console.WriteLine(m.InternationalTransaction(30, "Euros"));
-    Console.WriteLine(m.OnlineTransaction(5000, "SEK"));
+    gameState = 3;
 }
 
-Console.WriteLine("\n---VISA ELECTRON TEST---\n");
-
-if (new VisaElectron(c).CheckRequirements())
+if (gameState == 3)
 {
-    VisaElectron v = new VisaElectron(c);
-
-    foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(v))
-    {
-        string name = descriptor.Name;
-        object value = descriptor.GetValue(v);
-        Console.WriteLine("{0} = {1}", name, value);
-    }
-
-    Console.WriteLine("\nUnder limit: \n");
-    Console.WriteLine(v.DomesticTransaction(5000));
-    Console.WriteLine(v.InternationalTransaction(30, "Euros"));
-    Console.WriteLine(v.OnlineTransaction(5000, "SEK"));
-
-    Console.WriteLine("\nOver limit: \n");
-    Console.WriteLine(v.DomesticTransaction(11000));
-    Console.WriteLine(v.InternationalTransaction(11000, "Euros"));
-    Console.WriteLine(v.OnlineTransaction(11000, "SEK"));
+    Console.ReadKey();
 }
-
-Console.WriteLine("\n---VISA/DANKORT TEST\n");
-
-if (new VisaDankort(c).CheckRequirements())
-{
-    VisaDankort v = new VisaDankort(c);
-
-    foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(v))
-    {
-        string name = descriptor.Name;
-        object value = descriptor.GetValue(v);
-        Console.WriteLine("{0} = {1}", name, value);
-    }
-
-    Console.WriteLine("\nUnder limit: \n");
-    Console.WriteLine(v.DomesticTransaction(5000));
-    Console.WriteLine(v.InternationalTransaction(30, "Euros"));
-    Console.WriteLine(v.OnlineTransaction(5000, "SEK"));
-
-    Console.WriteLine("\nOver limit: \n");
-    Console.WriteLine(v.DomesticTransaction(11000));
-    Console.WriteLine(v.InternationalTransaction(11000, "Euros"));
-    Console.WriteLine(v.OnlineTransaction(11000, "SEK"));
-}
-
-Console.WriteLine("\n---MASTERCARD TEST---\n");
-
-if (new Mastercard(c).CheckRequirements())
-{
-    Mastercard m = new Mastercard(c);
-
-    foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(m))
-    {
-        string name = descriptor.Name;
-        object value = descriptor.GetValue(m);
-        Console.WriteLine("{0} = {1}", name, value);
-    }
-
-    Console.WriteLine("\nUnder limit: \n");
-    Console.WriteLine(m.DomesticTransaction(5000));
-    Console.WriteLine(m.InternationalTransaction(30, "Euros"));
-    Console.WriteLine(m.OnlineTransaction(5000, "SEK"));
-
-    Console.WriteLine("\nOver limit: \n");
-    Console.WriteLine(m.DomesticTransaction(11000));
-    Console.WriteLine(m.InternationalTransaction(11000, "Euros"));
-    Console.WriteLine(m.OnlineTransaction(11000, "SEK"));
-}
-
-Console.ReadKey();

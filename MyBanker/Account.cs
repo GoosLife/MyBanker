@@ -82,6 +82,11 @@ namespace MyBanker
         public void Deposit(int amount)
         {
             this.Balance += amount;
-        } 
+        }
+
+        public override string ToString()
+        {
+            return "Balance: " + Balance + "\n" + "Spent today: " + SpentToday + "\n" + "Spent this month: " + SpentThisMonth;
+        }
     }
 }

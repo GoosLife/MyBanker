@@ -23,5 +23,9 @@ namespace MyBanker
             Age = age;
             Account = account;
         }
+        public override string ToString()
+        {
+            return "\n\nName: " + Name + "\n" + "Age: " + Age + "\n" + Account + "\n";
+        }
     }
 }
