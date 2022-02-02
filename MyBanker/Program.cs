@@ -151,7 +151,14 @@ while (gameState == 2)
         Console.WriteLine("{0} = {1}", name, value);
     }
 
-    Console.ReadKey();
+    Console.WriteLine("\n\n");
+    string menu = "1. Domestic Transaction\n" +
+        "2. International transaction\n" +
+        "3. Online transaction\n" +
+        "4. Deposit money\n\n" +
+        "5. New customer";
+
+    Console.WriteLine(menu);
 
     gameState = 3;
 }
